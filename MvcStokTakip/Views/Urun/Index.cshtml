@@ -1,0 +1,56 @@
+﻿@using MvcStokTakip.Models.Entity
+@model PagedList.IPagedList<tbl_Urunler>
+@{
+    ViewBag.Title = "Ürün Listesi";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<!-- DataTables CSS -->
+<link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+<table id="tblUrun" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ÜRÜN ID</th>
+            <th>ÜRÜN ADI</th>
+            <th>MARKASI</th>
+            <th>KATEGORİ</th>
+            <th>FİYAT</th>
+            <th>STOK</th>
+            <th>SİL</th>
+            <th>GÜNCELLE</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var urn in Model)
+        {
+            <tr>
+                <td>@urn.UrunId</td>
+                <td>@urn.UrunAd</td>
+                <td>@urn.UrunMarkasi</td>
+                <td>@(urn.tbl_Kategoriler != null ? urn.tbl_Kategoriler.KategoriAd : "")</td>
+                <td>@urn.UrunFiyat</td>
+                <td>@urn.UrunStok</td>
+                <td><a href="/Urun/Sil/@urn.UrunId" class="btn btn-danger btn-sm">Sil</a></td>
+                <td><a href="/Urun/UrunGetir/@urn.UrunId" class="btn btn-success btn-sm">Güncelle</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/Urun/YeniUrun/" class="btn btn-primary mb-3">YENİ ÜRÜN EKLE</a>
+
+<!-- jQuery ve DataTables JS Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#tblUrun').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/Turkish.json"
+            }
+        });
+    });
+</script>

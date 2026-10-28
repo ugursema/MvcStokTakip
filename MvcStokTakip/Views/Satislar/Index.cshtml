@@ -1,0 +1,91 @@
+﻿@using MvcStokTakip.Models.Entity
+@model List<tbl_Satislar>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>SATIŞ ID</th>
+        <th>ÜRÜN</th>
+        <th>MÜŞTERİ AD</th>
+        <th>MÜŞTERİ SOYAD</th>
+        <th>ADET</th>
+        <th>FİYAT</th>
+        <th>SİL</th>
+        <th>GÜNCELLE</th>
+    </tr>
+    <tbody>
+        @foreach (var Satislar in Model)
+        {
+            <tr>
+                <th>@Satislar.SatisId</th>
+                <td>@Satislar.tbl_Urunler.UrunAd</td>
+                <td>@Satislar.tbl_Musteriler.MusteriAd</td>
+                <td>@Satislar.tbl_Musteriler.MusteriSoyad</td>
+                <td>@Satislar.Adet</td>
+                <td>@Satislar.Fiyat</td>
+                <td><a href="Satislar/Sil/@Satislar.SatisId" class="btn btn-danger">Sil</a> </td>
+                <td><a href="Satislar/Güncelle/@Satislar.SatisId" class="btn btn-success">Güncelle</a> </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!--  <a href="/Satislar/YeniSatis/" class="btn btn-primary">YENİ SATIŞ EKLE</a> -->
+<!-- Modal Açma Butonu -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal1">
+    Satış Yap
+</button>
+
+<!-- Satış Modal Penceresi -->
+<div class="modal fade" id="Modal1" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Satış Yapma Ekranı</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            @using (Html.BeginForm("YeniSatis", "Satislar", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <!-- Ürün Seçimi Dropdown -->
+                    <div class="form-group">
+                        <label>Ürün Seçiniz</label>
+                        @Html.DropDownList("Urun", (List<SelectListItem>)ViewBag.Urunler, "Lütfen Ürün Seçin", new { @class = "form-control", required = "required" })
+                    </div>
+
+                    <!-- Müşteri Seçimi Dropdown -->
+                    <div class="form-group" style="margin-top:15px">
+                        <label>Müşteri Seçiniz</label>
+                        @Html.DropDownList("Musteri", (List<SelectListItem>)ViewBag.Musteriler, "Lütfen Müşteri Seçin", new { @class = "form-control", required = "required" })
+                    </div>
+
+                    <!-- Adet -->
+                    <div class="form-group" style="margin-top:15px">
+                        <label>Adet</label>
+                        <input type="number" name="Adet" class="form-control" min="1" required />
+                    </div>
+
+                    <!-- Fiyat -->
+                    <div class="form-group" style="margin-top:15px">
+                        <label>Fiyat</label>
+                        <input type="text" name="Fiyat" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-info">Satışı Kaydet</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Vazgeç</button>
+
+                </div>}
+        </div>
+    </div>
+</div>

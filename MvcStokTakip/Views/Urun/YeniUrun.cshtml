@@ -1,0 +1,46 @@
+﻿@model MvcStokTakip.Models.Entity.tbl_Urunler
+@{
+    ViewBag.Title = "Yeni Ürün Ekle";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<!-- Form gönderildiğinde (Submit) verileri HttpPost metoduna POST eder -->
+<form class="form-group" method="post">
+
+    <!-- Ürün Adı Girdisi -->
+    <div>
+        <label>Ürün Adı</label>
+        <input type="text" class="form-control" name="UrunAd" required="" maxlength="50" placeholder="Ürün adı giriniz..." />
+        <!--MAX 50 KARAKTERE KADAR YAZAR-->
+    </div>
+    <!--PLACEHOLDER: BURAYA YAZINIZ:->
+    <!-- Marka Girdisi -->
+    <div style="margin-top:15px">
+        <label>Markası</label>
+        <input type="text" class="form-control" name="UrunMarkasi" required />
+    </div>
+
+    <!-- Kategori Seçim Menüsü (DropDownList) -->
+    <div style="margin-top:15px">
+        <label>Kategori Seçiniz</label>
+        @Html.DropDownListFor(m => m.tbl_Kategoriler.KategoriId, (List<SelectListItem>)ViewBag.dgr, new { @class = "form-control" })
+    </div>
+
+    <!-- Fiyat Girdisi -->
+    <div style="margin-top:15px">
+        <label>Fiyat</label>
+        <input type="text" class="form-control" name="UrunFiyat" required />
+    </div>
+
+    <!-- Stok Miktarı Girdisi -->
+    <div style="margin-top:15px">
+        <label>Stok Adet</label>
+        <input type="text" class="form-control" name="UrunStok" required />
+    </div>
+
+    <!-- Kaydet / Gönder Butonu -->
+    <div style="margin-top:15px">
+        <button class="btn btn-info">Ürün Ekle</button>
+    </div>
+
+</form>
